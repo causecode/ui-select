@@ -293,7 +293,7 @@
           } else {
             if (ctrl.multiple){
               //Remove already selected items (ex: while searching)
-              var filteredItems = items.filter(function(i) {return ctrl.selected.indexOf(i) < 0;});
+              var filteredItems = items.filter(function(i) {return ctrl.selected && ctrl.selected.indexOf(i) < 0;});
               setItemsFn(filteredItems);
             }else{
               setItemsFn(items);
@@ -309,7 +309,7 @@
         //Remove already selected items
         $scope.$watchCollection('$select.selected', function(selectedItems){
           var data = ctrl.parserResult.source($scope);
-          if (!selectedItems.length) {
+          if (!selectedItems || !selectedItems.length) {
             setItemsFn(data);
           }else{
             if ( data !== undefined ) {
@@ -517,7 +517,7 @@
 
     ctrl.getPlaceholder = function(){
       //Refactor single?
-      if(ctrl.multiple && ctrl.selected.length) return;
+      if(ctrl.multiple && ctrl.selected && ctrl.selected.length) return;
       return ctrl.placeholder;
     };
 
